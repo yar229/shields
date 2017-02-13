@@ -1308,7 +1308,7 @@ cache(function(data, match, sendBadge, request) {
         break;
       case 't':
         var downloads = data.package.downloads.total;
-        badgeData.text[1] = metric(downloads);
+        badgeData.text[1] = downloads;
         break;
       }
       badgeData.colorscheme = downloadCountColor(downloads);
