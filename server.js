@@ -3053,6 +3053,7 @@ cache(function(data, match, sendBadge, request)
         var zfiles = data.assets;
 
         var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
+        zfilename = 'zz' + zfilenameTrimmed + 'zz';
         var zfile = zfiles.filter(function(asset) {
             //return zfilename.localeCompare(asset.name);
             return zfilenameTrimmed.valueOf() == asset.name.valueOf();
