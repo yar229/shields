@@ -3050,13 +3050,18 @@ cache(function(data, match, sendBadge, request)
         var ztag = data.tag_name;
         var zfilename = filename.replace('_version_', ztag);
         var zfilesize = '0 b';
-        //var zfiles = data.assets;
-        //for (var i = 1; i < zfiles.length; i++) {
-        //    if (zfilename.localeCompare(zfiles[i].name))
-        //    {
-        //        zfilesize = zfiles[i].size;
-        //    }
-        //}
+        var zfiles = data.assets;
+
+        badgeData.text[0] = zfiles;
+        sendBadge(format, badgeData);
+        return;
+
+        for (var i = 1; i < zfiles.length; i++) {
+            if (zfilename.localeCompare(zfiles[i].name))
+            {
+                zfilesize = zfiles[i].size;
+            }
+        }
 
         var vdata = versionColor(ztag);
         badgeData.colorscheme = vdata.color;
