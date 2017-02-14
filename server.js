@@ -3034,7 +3034,7 @@ cache(function(data, match, sendBadge, request)
   var repo = match[3];
   var format = match[4];
   var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
-  var badgeData = getBadgeData('file', data);
+  var badgeData = getBadgeData('tag', data);
   if (badgeData.template === 'social') {
     badgeData.logo = badgeData.logo || logos.github;
   }
@@ -3050,13 +3050,13 @@ cache(function(data, match, sendBadge, request)
         var ztag = data.tag_name;
         var zfilename = filename.replace('_version_', ztag);
         var zfilesize = '0 b';
-        var zfiles = data.assets;
-        for (var i = 1; i < zfiles.length; i++) {
-            if (zfilename.localeCompare(zfiles[i].name))
-            {
-                zfilesize = zfiles[i].size;
-            }
-        }
+        //var zfiles = data.assets;
+        //for (var i = 1; i < zfiles.length; i++) {
+        //    if (zfilename.localeCompare(zfiles[i].name))
+        //    {
+        //        zfilesize = zfiles[i].size;
+        //    }
+        //}
 
         var vdata = versionColor(ztag);
         badgeData.colorscheme = vdata.color;
@@ -3065,8 +3065,8 @@ cache(function(data, match, sendBadge, request)
 
         badgeData.text[0] = zfilename;
         badgeData.links = [
-                            'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
-                            'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
+                            'https://github.com/' + user + '/' + repo + '/releases/download/' + ztag + '/' + zfilename,
+                            'https://github.com/' + user + '/' + repo + '/releases/download/' + ztag + '/' + zfilename,
                           ];
 
         sendBadge(format, badgeData);
@@ -3077,7 +3077,6 @@ cache(function(data, match, sendBadge, request)
     }
   });
 }));
-
 
 //1=================================================
 
