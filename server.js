@@ -3052,7 +3052,7 @@ cache(function(data, match, sendBadge, request) {
       badgeData.text[1] = vdata.version;
       badgeData.colorscheme = vdata.color;
 
-      badgeData.text[0] = res.headers['file'] + tag;
+       badgeData.text[0] = data.file + tag;
 
       sendBadge(format, badgeData);
     } catch(e) {
