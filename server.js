@@ -3049,10 +3049,10 @@ cache(function(data, match, sendBadge, request)
         var data = JSON.parse(buffer);
         var ztag = data.tag_name;
         var zfilename = filename.replace('_version_', ztag);
-        var zfilesize = '';
+        var zfilesize = '0 b';
         var zfiles = data.assets;
         for (var i = 1; i < zfiles.length; i++) {
-            if (zfiles[i].name == zfilename)
+            if (zfilename.localeCompare(zfiles[i].name))
             {
                 zfilesize = zfiles[i].size;
             }
