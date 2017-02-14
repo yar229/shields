@@ -3105,8 +3105,10 @@ cache(function(data, match, sendBadge, request) {
     if (badgeData.template === 'social') {
         badgeData.logo = badgeData.logo || logos.github;
     }
-    githubAuth.request(request, apiUrl, {}, function(err, res, buffer) {
-        if (err != null) {
+    githubAuth.request(request, apiUrl, {}, function (err, res, buffer)
+    {
+        if (err != null)
+        {
             badgeData.text[1] = 'inaccessible';
             sendBadge(format, badgeData);
             return;
@@ -3120,13 +3122,13 @@ cache(function(data, match, sendBadge, request) {
             badgeData.colorscheme = prerelease ? 'orange' : 'blue';
 
 
-            if (res.headers['file'])
-            {
+            //if (res.headers['file'])
+           // {
                 badgeData.links = [
                     'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version),
                     'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version)
                 ];
-            }
+            //}
 
             sendBadge(format, badgeData);
         } catch(e) {
