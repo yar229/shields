@@ -3096,13 +3096,15 @@ cache(function(data, match, sendBadge, request) {
 
 // GitHub release file integration.
 camp.route(/^\/github\/releasefile\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
-cache(function(data, match, sendBadge, request) {
+cache(function (data, match, sendBadge, request)
+{
     var user = match[1];  // eg, qubyte/rubidium
     var repo = match[2];
     var format = match[3];
     var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
     var badgeData = getBadgeData('release', data);
-    if (badgeData.template === 'social') {
+    if (badgeData.template === 'social')
+    {
         badgeData.logo = badgeData.logo || logos.github;
     }
     githubAuth.request(request, apiUrl, {}, function (err, res, buffer)
@@ -3125,8 +3127,8 @@ cache(function(data, match, sendBadge, request) {
             //if (res.headers['file'])
            // {
                 badgeData.links = [
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version),
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version),
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'].replace('version', data.tag_name),
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'].replace('version', data.tag_name),
                 ];
             //}
 
@@ -3137,7 +3139,6 @@ cache(function(data, match, sendBadge, request) {
         }
     });
 }));
-
 
 
 
