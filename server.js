@@ -3052,16 +3052,17 @@ cache(function(data, match, sendBadge, request)
         var zfilesize = '0 b';
         var zfiles = data.assets;
 
-        badgeData.text[0] = zfiles;
-        sendBadge(format, badgeData);
-        return;
+        var zfile = data.filter(function(asset) {
+            return zfilename.localeCompare(asset.name);
+        });
+        zfilesize = zfile.size;
 
-        for (var i = 1; i < zfiles.length; i++) {
-            if (zfilename.localeCompare(zfiles[i].name))
-            {
-                zfilesize = zfiles[i].size;
-            }
-        }
+        //for (var i = 1; i < zfiles.length; i++) {
+        //    if (zfilename.localeCompare(zfiles[i].name))
+        //    {
+        //        zfilesize = zfiles[i].size;
+        //    }
+        //}
 
         var vdata = versionColor(ztag);
         badgeData.colorscheme = vdata.color;
