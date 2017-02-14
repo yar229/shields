@@ -3056,7 +3056,7 @@ cache(function(data, match, sendBadge, request)
         var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
         //zfilename = 'z';
         var zfile = zfiles.filter(function (asset) {
-            //var xname = asset.name;
+            var xname = asset.name;
             //return zfilename.localeCompare(asset.name);
             //zfilename = zfilename + 'xx' + xname;
             return zfilenameTrimmed.valueOf() == xname.valueOf();
@@ -3093,7 +3093,6 @@ cache(function(data, match, sendBadge, request)
     }
   });
 }));
-
 
 
 //1=================================================
