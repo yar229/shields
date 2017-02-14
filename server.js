@@ -3024,6 +3024,7 @@ cache(function(data, match, sendBadge, request) {
   });
 }));
 
+
 //2==============================================================================
 // GitHub release file integration.
 camp.route(/^\/github\/file\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
@@ -3053,18 +3054,18 @@ cache(function(data, match, sendBadge, request)
         var zfiles = data.assets;
 
         var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
-        zfilename = 'z';
+        //zfilename = 'z';
         var zfile = zfiles.filter(function (asset) {
-            var xname = asset.name;
+            //var xname = asset.name;
             //return zfilename.localeCompare(asset.name);
-            zfilename = zfilename + 'xx' + xname;
+            //zfilename = zfilename + 'xx' + xname;
             return zfilenameTrimmed.valueOf() == xname.valueOf();
         });
         //var zfile = zfiles[0];
 
-        zfilename = zfilename + 'ss' + zfile.name;
+        //zfilename = zfilename + 'ss' + zfile.name;
 
-        zfilesize = zfile.size;
+        zfilesize = zfile[0].size;
 
         //for (var i = 1; i < zfiles.length; i++) {
         //    if (zfilename.localeCompare(zfiles[i].name))
@@ -3092,6 +3093,9 @@ cache(function(data, match, sendBadge, request)
     }
   });
 }));
+
+
+
 //1=================================================
 
 // GitHub tag integration.
