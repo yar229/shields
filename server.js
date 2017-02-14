@@ -3053,14 +3053,16 @@ cache(function(data, match, sendBadge, request)
         var zfiles = data.assets;
 
         var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
-        zfilename = 'zz' + zfilenameTrimmed + 'zz';
-        var zfile = zfiles.filter(function(asset) {
+        zfilename = 'z';
+        var zfile = zfiles.filter(function (asset) {
+            var xname = asset.name;
             //return zfilename.localeCompare(asset.name);
-            return zfilenameTrimmed.valueOf() == asset.name.valueOf();
+            zfilename = zfilename + 'xx' + xname;
+            return zfilenameTrimmed.valueOf() == xname.valueOf();
         });
         //var zfile = zfiles[0];
 
-
+        zfilename = zfilename + 'ss' + zfile.name;
 
         zfilesize = zfile.size;
 
@@ -3090,7 +3092,6 @@ cache(function(data, match, sendBadge, request)
     }
   });
 }));
-
 //1=================================================
 
 // GitHub tag integration.
