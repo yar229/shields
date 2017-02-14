@@ -3028,11 +3028,13 @@ cache(function(data, match, sendBadge, request) {
 //1=================================================
 
 // GitHub tag integration.
-camp.route(/^\/github\/tagfile\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
-cache(function(data, match, sendBadge, request) {
-  var user = match[1];  // eg, strongloop/express
-  var repo = match[2];
-  var format = match[3];
+camp.route(/^\/github\/tagfile\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
+cache(function(data, match, sendBadge, request) 
+{
+  var filename = match[1];
+  var user = match[2];  // eg, strongloop/express
+  var repo = match[3];
+  var format = match[4];
   var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/tags';
   var badgeData = getBadgeData('tag', data);
   if (badgeData.template === 'social') {
@@ -3052,7 +3054,7 @@ cache(function(data, match, sendBadge, request) {
       badgeData.text[1] = vdata.version;
       badgeData.colorscheme = vdata.color;
 
-       badgeData.text[0] = data.file + tag;
+       badgeData.text[0] = filename.replace('{version}', tag);
 
       sendBadge(format, badgeData);
     } catch(e) {
