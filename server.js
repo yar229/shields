@@ -3024,6 +3024,59 @@ cache(function(data, match, sendBadge, request) {
   });
 }));
 
+//2==============================================================================
+// GitHub release file integration.
+camp.route(/^\/github\/file\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
+cache(function(data, match, sendBadge, request) 
+{
+  var filename = match[1];
+  var user = match[2];  // eg, strongloop/express
+  var repo = match[3];
+  var format = match[4];
+  var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
+  var badgeData = getBadgeData('file', data);
+  if (badgeData.template === 'social') {
+    badgeData.logo = badgeData.logo || logos.github;
+  }
+  githubAuth.request(request, apiUrl, {}, function(err, res, buffer) {
+    if (err != null) {
+      badgeData.text[1] = 'inaccessible';
+      sendBadge(format, badgeData);
+      return;
+    }
+    try
+    {
+        var data = JSON.parse(buffer);
+        var ztag = data.tag_name;
+        var zfilename = filename.replace('_version_', tag);
+        var zfilesize = '';
+        var zfiles = data.assets;
+        for (var i = 1; i < zfiles.length; i++) {
+            if (zfiles[i].name == zfilename)
+            {
+                zfilesize = metric(zfiles[i].size);
+            }
+        }
+
+        var vdata = versionColor(tag);
+        badgeData.text[1] = zfilesize;
+        badgeData.colorscheme = vdata.color;
+
+        badgeData.text[0] = zfilename;
+        badgeData.links = [
+                            'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
+                            'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
+                          ];
+
+        sendBadge(format, badgeData);
+    } catch (e)
+    {
+        badgeData.text[1] = 'none';
+        sendBadge(format, badgeData);
+    }
+  });
+}));
+
 
 //1=================================================
 
@@ -3037,6 +3090,47 @@ cache(function(data, match, sendBadge, request)
   var format = match[4];
   var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/tags';
   var badgeData = getBadgeData('tag', data);
+  if (badgeData.template === 'social') {
+    badgeData.logo = badgeData.logo || logos.github;
+  }
+  githubAuth.request(request, apiUrl, {}, function(err, res, buffer) {
+    if (err != null) {
+      badgeData.text[1] = 'inaccessible';
+      sendBadge(format, badgeData);
+      return;
+    }
+    try {
+      var data = JSON.parse(buffer);
+      var versions = data.map(function(e) { return e.name; });
+      var tag = latestVersion(versions);
+      var vdata = versionColor(tag);
+      badgeData.text[1] = vdata.version;
+      badgeData.colorscheme = vdata.color;
+
+       badgeData.text[0] = filename.replace('_version_', tag);
+      badgeData.links = [];
+
+      sendBadge(format, badgeData);
+    } catch(e) {
+      badgeData.text[1] = 'none';
+      sendBadge(format, badgeData);
+    }
+  });
+}));
+
+
+//2==============================================================================
+// GitHub tag integration.
+camp.route(/^\/github\/file\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
+cache(function(data, match, sendBadge, request) 
+{
+  var filename = match[1];
+  var user = match[2];  // eg, strongloop/express
+  var repo = match[3];
+  var format = match[4];
+  //https://api.github.com/repos/yar229/WebDavMailRuCloud/releases/latest
+  var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
+  var badgeData = getBadgeData('file', data);
   if (badgeData.template === 'social') {
     badgeData.logo = badgeData.logo || logos.github;
   }
