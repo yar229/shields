@@ -3092,6 +3092,54 @@ cache(function(data, match, sendBadge, request) {
   });
 }));
 
+//==============================================================================================================================
+
+// GitHub release file integration.
+camp.route(/^\/github\/releasefile\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
+cache(function(data, match, sendBadge, request) {
+    var user = match[1];  // eg, qubyte/rubidium
+    var repo = match[2];
+    var format = match[3];
+    var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
+    var badgeData = getBadgeData('release', data);
+    if (badgeData.template === 'social') {
+        badgeData.logo = badgeData.logo || logos.github;
+    }
+    githubAuth.request(request, apiUrl, {}, function(err, res, buffer) {
+        if (err != null) {
+            badgeData.text[1] = 'inaccessible';
+            sendBadge(format, badgeData);
+            return;
+        }
+        try {
+            var data = JSON.parse(buffer);
+            var version = data.tag_name;
+            var prerelease = data.prerelease;
+            var vdata = versionColor(version);
+            badgeData.text[1] = vdata.version;
+            badgeData.colorscheme = prerelease ? 'orange' : 'blue';
+
+
+            if (res.headers['file'])
+            {
+                badgeData.links = [
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version),
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + vdata.version + '/' + res.headers['file'].replace('{version}', vdata.version)
+                ];
+            }
+
+            sendBadge(format, badgeData);
+        } catch(e) {
+            badgeData.text[1] = 'none';
+            sendBadge(format, badgeData);
+        }
+    });
+}));
+
+
+
+
+
 // GitHub commits since integration.
 camp.route(/^\/github\/commits-since\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
 cache(function(data, match, sendBadge, request) {
