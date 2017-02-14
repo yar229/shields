@@ -3127,8 +3127,8 @@ cache(function (data, match, sendBadge, request)
             //if (res.headers['file'])
            // {
                 badgeData.links = [
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'].replace('version', data.tag_name),
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'].replace('version', data.tag_name),
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'],
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'],
                 ];
             //}
 
