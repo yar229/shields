@@ -3055,6 +3055,7 @@ cache(function(data, match, sendBadge, request)
       badgeData.colorscheme = vdata.color;
 
        badgeData.text[0] = filename.replace('_version_', tag);
+      badgeData.links = [];
 
       sendBadge(format, badgeData);
     } catch(e) {
