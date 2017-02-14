@@ -3125,10 +3125,12 @@ cache(function (data, match, sendBadge, request)
 
 
             //if (res.headers['file'])
-           // {
+            // {
+            var zfile = res.headers['file']
+                     .match(/(.+)/)[1];
                 badgeData.links = [
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'],
-                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + res.headers['file'],
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
+                    'https://github.com/' + user + '/' + repo + '/releases/download/' + data.tag_name + '/' + zfile,
                 ];
             //}
 
