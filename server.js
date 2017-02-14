@@ -3058,9 +3058,10 @@ cache(function(data, match, sendBadge, request)
             }
         }
 
-        var vdata = versionColor(tag);
-        badgeData.text[1] = zfilesize;
+        var vdata = versionColor(ztag);
         badgeData.colorscheme = vdata.color;
+
+        badgeData.text[1] = zfilesize;
 
         badgeData.text[0] = zfilename;
         badgeData.links = [
