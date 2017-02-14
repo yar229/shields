@@ -3048,13 +3048,13 @@ cache(function(data, match, sendBadge, request)
     {
         var data = JSON.parse(buffer);
         var ztag = data.tag_name;
-        var zfilename = filename.replace('_version_', tag);
+        var zfilename = filename.replace('_version_', ztag);
         var zfilesize = '';
         var zfiles = data.assets;
         for (var i = 1; i < zfiles.length; i++) {
             if (zfiles[i].name == zfilename)
             {
-                zfilesize = metric(zfiles[i].size);
+                zfilesize = zfiles[i].size;
             }
         }
 
