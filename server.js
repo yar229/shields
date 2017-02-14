@@ -3024,6 +3024,65 @@ cache(function(data, match, sendBadge, request) {
   });
 }));
 
+//3==============================================================================
+// GitHub release file integration.
+camp.route(/^\/github\/filewlogo\/([^\/]+)\/([^\/]+)\/([^\/]+)\/([^\/]+)\.(svg|png|gif|jpg|json)$/,
+cache(function (data, match, sendBadge, request) {
+    var logo = match[1];
+    var filename = match[2];
+    var user = match[3];  // eg, strongloop/express
+    var repo = match[4];
+    var format = match[5];
+    var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
+    var badgeData = getBadgeData('tag', data);
+
+    if (logo === 'win') {
+        badgeData.logo = badgeData.logo || logos.windows;
+    }
+
+
+    if (badgeData.template === 'social') {
+        badgeData.logo = badgeData.logo || logos.github;
+    }
+    githubAuth.request(request, apiUrl, {}, function (err, res, buffer) {
+        if (err != null) {
+            badgeData.text[1] = 'inaccessible';
+            sendBadge(format, badgeData);
+            return;
+        }
+        try {
+            var data = JSON.parse(buffer);
+            var ztag = data.tag_name;
+            var zfilename = filename.replace('_version_', ztag);
+            var zfilesize = '0 b';
+            var zfiles = data.assets;
+
+            var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
+            var zfile = zfiles.filter(function (asset) {
+                var xname = asset.name;
+                return zfilenameTrimmed.valueOf() == xname.valueOf();
+            });
+            zfilesize = metric(zfile[0].size) + 'B';
+
+            var vdata = versionColor(ztag);
+            badgeData.colorscheme = vdata.color;
+
+            badgeData.text[1] = zfilesize;
+
+            badgeData.text[0] = zfilename;
+            badgeData.links = [
+                                'https://github.com/' + user + '/' + repo + '/releases/download/' + ztag + '/' + zfilename,
+                                'https://github.com/' + user + '/' + repo + '/releases/download/' + ztag + '/' + zfilename,
+            ];
+
+            sendBadge(format, badgeData);
+        } catch (e) {
+            badgeData.text[1] = 'none';
+            sendBadge(format, badgeData);
+        }
+    });
+}));
+
 
 //2==============================================================================
 // GitHub release file integration.
