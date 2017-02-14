@@ -3052,10 +3052,12 @@ cache(function(data, match, sendBadge, request)
         var zfilesize = '0 b';
         var zfiles = data.assets;
 
-        //var zfile = zfiles.filter(function(asset) {
-        //    return zfilename.localeCompare(asset.name);
-        //});
-        var zfile = zfiles[0];
+        var zfilenameTrimmed = zfilename.replace(/^\s+|\s+$/g, '');
+        var zfile = zfiles.filter(function(asset) {
+            //return zfilename.localeCompare(asset.name);
+            return zfilenameTrimmed.valueOf() == asset.name.valueOf();
+        });
+        //var zfile = zfiles[0];
 
 
 
