@@ -3052,9 +3052,13 @@ cache(function(data, match, sendBadge, request)
         var zfilesize = '0 b';
         var zfiles = data.assets;
 
-        var zfile = zfiles.filter(function(asset) {
-            return zfilename.localeCompare(asset.name);
-        });
+        //var zfile = zfiles.filter(function(asset) {
+        //    return zfilename.localeCompare(asset.name);
+        //});
+        var zfile = zfiles[0];
+
+
+
         zfilesize = zfile.size;
 
         //for (var i = 1; i < zfiles.length; i++) {
