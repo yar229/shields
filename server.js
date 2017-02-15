@@ -3036,8 +3036,8 @@ cache(function (data, match, sendBadge, request) {
     var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
     var badgeData = getBadgeData('tag', data);
 
-    if (logo === 'win') {
-        badgeData.logo = badgeData.logo || logos.windows;
+    //if (logo === 'win') {
+        badgeData.logo = badgeData.logo || logos[logo];
     }
 
 
