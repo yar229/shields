@@ -3038,7 +3038,7 @@ cache(function (data, match, sendBadge, request) {
 
     //if (logo === 'win') {
         badgeData.logo = badgeData.logo || logos[logo];
-    }
+    //}
 
 
     if (badgeData.template === 'social') {
