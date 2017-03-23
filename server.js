@@ -236,7 +236,7 @@ function cache(f) {
     }, 25000);
 
     // Only call vendor servers when last request is older than…
-    var cacheInterval = 30000;  // milliseconds
+    var cacheInterval = 60000;  // milliseconds
     var cachedRequest = function (uri, options, callback) {
       if ((typeof options === 'function') && !callback) { callback = options; }
       if (options && typeof options === 'object') {
